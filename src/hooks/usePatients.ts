@@ -37,13 +37,6 @@ export const useAppointments = () => {
   return appointments;
 };
 
-export const usePatientActions = () =>
-  usePatientStore((s) => ({
-    addPatient: s.addPatient,
-    removePatient: s.removePatient,
-    updatePatient: s.updatePatient,
-    addAppointment: s.addAppointment,
-    updateAppointmentStatus: s.updateAppointmentStatus,
-    removeAppointment: s.removeAppointment,
-    setSearchQuery: s.setSearchQuery,
-  }));
+export const useSetSearchQuery = () => {
+  return usePatientStore((s) => s.setSearchQuery);
+};
