@@ -40,3 +40,11 @@ export const useAppointments = () => {
 export const useSetSearchQuery = () => {
   return usePatientStore((s) => s.setSearchQuery);
 };
+
+export const useAddPatient = () => {
+  return usePatientStore((s) => s.addPatient);
+};
+
+export const useRemovePatient = () => {
+  return usePatientStore ((s) => s.removePatient)
+}

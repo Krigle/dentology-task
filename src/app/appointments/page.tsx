@@ -1,12 +1,18 @@
 "use client";
 import { useAppointments } from "@/hooks/usePatients";
 import { formatDateTime } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function AppointmentsPage() {
   const appointments = useAppointments();
+  const router = useRouter();
 
   return (
     <div className="container">
+      <div onClick={() => router.push("/")}>
+        <ArrowLeft />
+      </div>
       <h1 className="page-title">Appointments</h1>
 
       {appointments.length === 0 ? (

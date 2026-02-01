@@ -1,34 +1,37 @@
 "use client";
-import { usePatients, useSetSearchQuery } from "@/hooks/usePatients";
+import { usePatients } from "@/hooks/usePatients";
 import Link from "next/link";
 import { useState } from "react";
+import { Plus } from "lucide-react";
+import Modal from "@/components/Modal";
+import AddPatientForm from "@/components/AddPatientForm";
 
 export default function Home() {
   const { patients } = usePatients();
-  const setSearchQuery = useSetSearchQuery();
-  const [localQuery, setLocalQuery] = useState("");
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setLocalQuery(value);
-    setSearchQuery(value);
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="container">
       <div className="page-header">
         <h1 className="page-title">Patients</h1>
-        <Link href="/appointments" className="nav-link">
-          View Appointments
-        </Link>
+        <div className="header-actions">
+          <button
+            className="btn-add-patient"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <Plus size={18} />
+            Add Patient
+          </button>
+          <Link href="/appointments" className="nav-link">
+            View Appointments
+          </Link>
+        </div>
       </div>
 
       <div className="search-container">
         <input
           type="text"
           placeholder="Search patients by name or ID..."
-          value={localQuery}
-          onChange={handleSearch}
           className="search-input"
         />
       </div>
@@ -61,6 +64,14 @@ export default function Home() {
           ))
         )}
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add New Patient"
+      >
+        <AddPatientForm onSuccess={() => setIsModalOpen(false)} />
+      </Modal>
     </div>
   );
 }
