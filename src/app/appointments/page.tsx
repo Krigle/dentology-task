@@ -1,33 +1,36 @@
-import { usePatient } from "@/hooks/usePatients";
-import { formatDate, formatDateTime } from "@/lib/utils";
+"use client";
+import { useAppointments } from "@/hooks/usePatients";
+import { formatDateTime } from "@/lib/utils";
 
-export default function PatientDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const patient = usePatient(params.id);
-
-  if (!patient) return <h3>Patient Not Found</h3>;
+export default function AppointmentsPage() {
+  const appointments = useAppointments();
 
   return (
-    <>
-      <h1>{patient.name}</h1>
-      <p>DOB: {formatDate(patient.dateOfBirth)}</p>
-      <p>ID: {patient.id}</p>
+    <div className="container">
+      <h1 className="page-title">Appointments</h1>
 
-      <h2>Appointments</h2>
-      {patient.appointments.length === 0 ? (
-        <p>No appointments</p>
+      {appointments.length === 0 ? (
+        <p className="no-appointments">No appointments</p>
       ) : (
-        <ul>
-          {patient.appointments.map((a) => (
-            <li key={a.id}>
-              {formatDateTime(a.dateTime)} – {a.type} ({a.status})
+        <ul className="appointment-list">
+          {appointments.map((a) => (
+            <li key={a.id} className="appointment-item">
+              <div className="appointment-info">
+                <span className="appointment-datetime">
+                  {formatDateTime(a.dateTime)}
+                </span>
+                <span className="appointment-type">{a.type}</span>
+                <span className={`appointment-status status-${a.status}`}>
+                  {a.status}
+                </span>
+              </div>
+              <div className="appointment-patient">
+                {a.patientName} ({a.patientId})
+              </div>
             </li>
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 }

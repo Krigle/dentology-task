@@ -21,6 +21,22 @@ export const usePatients = () => {
 export const usePatient = (id: string) =>
   usePatientStore((s) => s.patients.find((p) => p.id === id));
 
+export const useAppointments = () => {
+  const patients = usePatientStore((s) => s.patients);
+
+  const appointments = useMemo(() => {
+    return patients.flatMap((p) =>
+      p.appointments.map((a) => ({
+        ...a,
+        patientId: p.id,
+        patientName: p.name,
+      })),
+    );
+  }, [patients]);
+
+  return appointments;
+};
+
 export const usePatientActions = () =>
   usePatientStore((s) => ({
     addPatient: s.addPatient,
