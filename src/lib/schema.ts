@@ -9,8 +9,8 @@ export const AppointmentSchema = z.object({
 
 export const PatientSchema = z.object({
   id: z.string(),
-  dateOfBirth: z.string().min(2),
-  age: z.string(),
+  name: z.string().min(2),
+  dateOfBirth: z.string(),
   email: z.email().optional(),
   phone: z.string().optional(),
   appointments: z.array(AppointmentSchema).default([]),
