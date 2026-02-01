@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Patient, Appointment } from "@/lib/schema";
 import { generateId } from "@/lib/utils";
+import { mockPatients } from "@/lib/mock-data";
 
 interface PatientState {
   patients: Patient[];
@@ -25,7 +26,7 @@ interface PatientActions {
 }
 
 export const usePatientStore = create<PatientState & PatientActions>((set) => ({
-  patients: [],
+  patients: mockPatients,
   searchQuery: "",
 
   addPatient: (patient) =>

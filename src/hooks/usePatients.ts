@@ -1,3 +1,4 @@
+"use client";
 import { usePatientStore } from "@/store/store";
 import { useMemo } from "react";
 
@@ -16,6 +17,9 @@ export const usePatients = () => {
 
   return { patients: filtered, searchQuery };
 };
+
+export const usePatient = (id: string) =>
+  usePatientStore((s) => s.patients.find((p) => p.id === id));
 
 export const usePatientActions = () =>
   usePatientStore((s) => ({
