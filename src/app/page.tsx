@@ -1,5 +1,5 @@
 "use client";
-import { usePatients } from "@/hooks/usePatients";
+import { usePatients, useSetSearchQuery } from "@/hooks/usePatients";
 import Link from "next/link";
 import { useState } from "react";
 import { Plus } from "lucide-react";
@@ -8,7 +8,10 @@ import AddPatientForm from "@/components/AddPatientForm";
 
 export default function Home() {
   const { patients } = usePatients();
+  const setSearchQuery = useSetSearchQuery();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="container">
@@ -33,6 +36,11 @@ export default function Home() {
           type="text"
           placeholder="Search patients by name or ID..."
           className="search-input"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setSearchQuery(e.target.value);
+          }}
         />
       </div>
 
